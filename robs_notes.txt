@@ -1,0 +1,12 @@
+# Initial Testing
+
+Take built go bin and place it in root level module so that `terraform init` can pick it up
+
+## ACC
+
+Thoughts on how to test this:
+
+* Check that for given `initialize_with_readme` that the complete repo exists with a readme at the readme_url
+  thats expected via the received API response. This only matters upon initial spinup of the project/repo and
+  shouldnt need to be stored within the statefile since the git repo will be the source of truth for any files
+  within it. Including this initial readme.
