@@ -115,6 +115,11 @@ var resourceGitLabProjectSchema = map[string]*schema.Schema{
 		Elem:     &schema.Schema{Type: schema.TypeString},
 		Set:      schema.HashString,
 	},
+	"initialize_with_readme": {
+		Type:     schema.TypeBool,
+		Optional: true,
+		Default:  false,
+	},
 	"shared_with_groups": {
 		Type:     schema.TypeSet,
 		Optional: true,
@@ -191,6 +196,7 @@ func resourceGitlabProjectCreate(d *schema.ResourceData, meta interface{}) error
 		MergeMethod:                      stringToMergeMethod(d.Get("merge_method").(string)),
 		OnlyAllowMergeIfPipelineSucceeds: gitlab.Bool(d.Get("only_allow_merge_if_pipeline_succeeds").(bool)),
 		OnlyAllowMergeIfAllDiscussionsAreResolved: gitlab.Bool(d.Get("only_allow_merge_if_all_discussions_are_resolved").(bool)),
+		InitializeWithReadme:                      gitlab.Bool(d.Get("initialize_with_readme").(bool)),
 	}
 
 	if v, ok := d.GetOk("path"); ok {
