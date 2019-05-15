@@ -301,6 +301,12 @@ func testAccCheckAggregateGitlabProject(expected, received *gitlab.Project) reso
 			if testAccIsSkippedAttribute(attribute, testAccSkipGitLabProjectAttributes) {
 				return nil // skipping because we said so.
 			}
+			if attribute == "initialize_with_readme" {
+			  // recieve should return: "readme_url": "http://example.com/diaspora/diaspora-client/blob/master/README.md",
+			  if attrValue == received['readme_url']
+			    return nil
+			  else
+			    return err
 			if attrValue.Computed {
 				if attrDefault, err := attrValue.DefaultValue(); err == nil {
 					if attrDefault == nil {
@@ -378,6 +384,7 @@ resource "gitlab_project" "foo" {
   merge_method = "ff"
   only_allow_merge_if_pipeline_succeeds = true
   only_allow_merge_if_all_discussions_are_resolved = true
+  initialize_with_readme = true
 }
 	`, rInt, rInt)
 }
